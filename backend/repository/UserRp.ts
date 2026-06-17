@@ -23,6 +23,14 @@ class UserRepository {
             }
         );
     }
+    //Obtener todos los usuarios de una empresa por id
+    async getUserByIdCompany(id_company:number): Promise<UserPg[]|null>{
+        return await UserPg.findAll(
+            {
+                where: {companyId: id_company}
+            }
+        );
+    }
 
     // Actualizar usuario 
     async updateUser(email:string, data:Partial<UserPg>): Promise<UserPg|null>{
