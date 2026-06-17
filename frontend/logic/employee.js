@@ -219,7 +219,10 @@ function renderEmployeesTable(employees){
     deleteBtn.className = "btn-delete";
     deleteBtn.textContent = "Eliminar";
     deleteBtn.dataset.id = employee.id;
-    //deleteBtn.addEventListener("click", handleDeleteClick);
+    deleteBtn.addEventListener("click", async(e) => {
+        const employeeId = e.target.dataset.id;
+        await handleDeleteClick(employeeId);
+    });
 
     actionCell.appendChild(editButton);
     actionCell.appendChild(deleteBtn);
@@ -230,3 +233,25 @@ function renderEmployeesTable(employees){
     
    });
 }
+
+const handleDeleteClick = async (id) => {
+    const url = `http://localhost:3520/api/users/delete/${id}`;
+
+    const isConfirm = confirm("¿Estas seguro de eliminar el empleado?");
+    if(!isConfirm) return;
+
+    try {
+        const response = await fetch(url,{
+            method:"DELETE",
+        });
+        const result = await response.json();
+        if(!result.success) throw new Error(result.message || "Fallo al eliminar el empleado");
+
+        alert("Empleado eliminado correctamente");
+        await fetchListEmployees();
+    } catch (error) {
+        console.error("Error al eliminar el empleado: ", error);
+        throw error;
+    }
+} 
+
