@@ -16,10 +16,10 @@ class UserController {
 
     //Obtner todos los usuario de la empresa
     async getUsersByCompanyId(req: Request, res:Response, next:NextFunction){
-        const compnayId = Number(req.params.compnayId);
+        const companyId = Number(req.params.companyId);
 
         try {
-            const response = await userService.getUsersByCompanyId(compnayId);
+            const response = await userService.getUsersByCompanyId(companyId);
             res.status(200).json(response);
         } catch (error) {
             next(error);

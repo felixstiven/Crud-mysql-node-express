@@ -27,7 +27,11 @@ class UserRepository {
     async getUsersByIdCompany(id_company:number): Promise<UserPg[]|null>{
         return await UserPg.findAll(
             {
-                where: {companyId: id_company}
+                where: {companyId: id_company},
+                include:{
+                    model: CompanyPg,
+                    attributes:["id", "name"]
+                }
             }
         );
     }
