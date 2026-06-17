@@ -25,6 +25,16 @@ class UserController {
             next(error);
         }
     }
+
+    async deleteEmployee(req:Request, res:Response, next:NextFunction){
+        const id = Number(req.params.id);
+        try {
+            const response = await userService.deleteEmployee(id);
+            res.status(200).json(response);
+        } catch (error) {
+            next();
+        }
+    }
 }
 
 const userController = new UserController();

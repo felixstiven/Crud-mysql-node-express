@@ -173,20 +173,16 @@ class UserService{
     }
 
     //Eliminar usuario empleados
-    async deleteEmployee(email:string){
-        //Verificar que el correo llegue correctamenete y que exista
-        const emailNorm = normalizedEmail(email);
-        if(!validarEmail(emailNorm)) throw new Error("Email no valido.");
+    async deleteEmployee(id:number){
 
-        const existeUser = await userRepository.getUserByEmail(emailNorm);
+        const existeUser = await userRepository.getUserById(id);
         if(!existeUser) throw new Error("Usuario no encontrado.");
 
         try {
-            await userRepository.deleteUser(emailNorm);
+            await userRepository.deleteUser(id);
             return{
                 success:true,
                 message:"Usuario eliminado correctamente",
-                data: emailNorm
             };
             
         } catch (error) {

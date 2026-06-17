@@ -23,6 +23,18 @@ class UserRepository {
             }
         );
     }
+    //Obtener usuario por id
+    async getUserById(id:number): Promise<UserPg | null>{
+        return await UserPg.findOne(
+            {
+                where: {id:id},
+                include:{
+                    model: CompanyPg,
+                    attributes: ["id", "name"]
+                }
+            }
+        )
+    }
     //Obtener todos los usuarios de una empresa por id
     async getUsersByIdCompany(id_company:number): Promise<UserPg[]|null>{
         return await UserPg.findAll(
@@ -48,10 +60,10 @@ class UserRepository {
     }
 
     //Eliminar ususario
-    async deleteUser(email:string): Promise<void>{
+    async deleteUser(id:number): Promise<void>{
         await UserPg.destroy(
             {
-                where:{email:email}
+                where:{id:id}
             }
         );
     }
