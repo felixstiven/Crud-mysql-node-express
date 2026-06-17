@@ -13,8 +13,16 @@ const editBtn = document.getElementById("editBtn");
 const deleteBtn = document.getElementById("deleteBtn");
 const errorDiv = document.getElementById("textError");
 
+//referencias para las tabas
+const employeeListTableBody = document.getElementById("employeeList");
+
 
 const urlApi = "http://localhost:3520/api/users/create";
+
+//ejecutar al cargar pagina
+document.addEventListener("DOMContentLoaded", ()=>{
+    fetchListEmployees();
+});
 
 employeeForm.addEventListener("submit", (e) => {
     e.preventDefault();
@@ -121,6 +129,7 @@ async function createEmployee() {
         if(!response.success) throw new Error(response.message || "Error al crear el usuario.");
 
         alert("Usuario creado exitosamente.");
+        await fetchListEmployees();
         employeeForm.reset(); 
 
         return response;
@@ -133,4 +142,91 @@ async function createEmployee() {
         submitButton.disabled = false;
         submitButton.textContent = textContentButtonActual;
     }
+}
+
+async function fetchListEmployees(){
+
+    const userLogged = JSON.parse(localStorage.getItem("user"));
+    if(!userLogged || !userLogged.companyId){
+        showError("Sesion expirada, por favor inicia sesion nuevamente.");
+        return;
+    }
+
+    const companyId = userLogged.companyId;
+
+    const url = `http://localhost:3520/api/users/load/${companyId}`;
+
+    try {
+        const response = await fetch(url);
+        const result = await response.json();
+
+        console.log("resut", result);
+
+        if(!result.success) throw new Error(result.message || "Fallo al obtener la lista de empleados.");
+
+        renderEmployeesTable(result.data || []);
+        
+    } catch (error) {
+        console.error("Error al listar empleados: ", error);
+        throw error;
+    }
+}
+
+function renderEmployeesTable(employees){
+   employeeListTableBody.innerHTML ="";
+
+   employees.forEach(employee => {
+    const row = document.createElement("tr");
+
+    //celda ID
+    const idCell = document.createElement("td");
+    idCell.textContent = employee.id;
+    row.appendChild(idCell);
+
+    //celda nombre completo
+    const fullNameCell = document.createElement("td");
+    fullNameCell.textContent = `${employee.firstName} ${employee.secondName || ""}`;
+    row.appendChild(fullNameCell);
+
+    //celda aplleidos completos
+    const fullLastName = document.createElement("td");
+    fullLastName.textContent = `${employee.firstLastName} ${employee.secondLastName || ""}`;
+    row.appendChild(fullLastName);
+
+    //celda rol 
+    const roleCell = document.createElement("td");
+    roleCell.className = `badge badge-${employee.role === "admin" ? "admin" : employee.role === "supervisor" ? "supervisor" : "tecnico"}`;
+    roleCell.textContent = employee.role;
+    row.appendChild(roleCell);
+
+    //celda email
+    const emailCell = document.createElement("td");
+    emailCell.textContent = employee.email;
+    row.appendChild(emailCell);
+
+    //celda boton de acciones 
+    const actionCell = document.createElement("td");
+    
+    const editButton = document.createElement("button");
+    editButton.className = "btn-edit";
+    editButton.textContent = "Editar";
+    editButton.dataset.id = employee.id;
+    editButton.dataset.bsToggle="modal"
+    editButton.dataset.bsTarget = "#editEmployeeModal";
+    //editBtn.addEventListener("click", handleEditClick);
+
+    const deleteBtn = document.createElement("button");
+    deleteBtn.className = "btn-delete";
+    deleteBtn.textContent = "Eliminar";
+    deleteBtn.dataset.id = employee.id;
+    //deleteBtn.addEventListener("click", handleDeleteClick);
+
+    actionCell.appendChild(editButton);
+    actionCell.appendChild(deleteBtn);
+
+    row.appendChild(actionCell);
+
+    employeeListTableBody.appendChild(row);
+    
+   });
 }
