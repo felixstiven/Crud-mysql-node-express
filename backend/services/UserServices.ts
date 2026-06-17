@@ -9,6 +9,7 @@ import {
     esPasswordValida,
     hashPassword
 } from "../utils/validators.js";
+import { data } from "react-router-dom";
 
 
 class UserService{
@@ -78,6 +79,25 @@ class UserService{
             }
         } catch (error) {
             console.error("Error al crear empleado", error);
+            throw error;
+        }
+    }
+
+    //obtener todos los usuarios de una empresa por id
+    async getUsersByCompanyId(companyId:number){
+        try {
+            if(!companyId) throw new Error("No se envio el id de compañia");
+            const employee = await userRepository.getUsersByIdCompany(companyId);
+            if(!employee) throw new Error("No se encontraron empleados.");
+
+            return {
+                success: true,
+                message:"Empleados obtenidos exitosamente",
+                data:employee
+            }
+            
+        } catch (error) {
+            console.error("Error al obtener empleados", error);
             throw error;
         }
     }
