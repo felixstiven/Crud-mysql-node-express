@@ -13,8 +13,16 @@ const editBtn = document.getElementById("editBtn");
 const deleteBtn = document.getElementById("deleteBtn");
 const errorDiv = document.getElementById("textError");
 
+//referencias para las tabas
+const employeeListTableBody = document.getElementById("employeeList");
+
 
 const urlApi = "http://localhost:3520/api/users/create";
+
+//ejecutar al cargar pagina
+document.addEventListener("DOMContentLoaded", ()=>{
+    fetchListEmployees();
+});
 
 employeeForm.addEventListener("submit", (e) => {
     e.preventDefault();
@@ -121,6 +129,7 @@ async function createEmployee() {
         if(!response.success) throw new Error(response.message || "Error al crear el usuario.");
 
         alert("Usuario creado exitosamente.");
+        await fetchListEmployees();
         employeeForm.reset(); 
 
         return response;
