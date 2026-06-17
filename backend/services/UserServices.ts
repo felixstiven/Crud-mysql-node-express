@@ -103,12 +103,12 @@ class UserService{
     }
 
     //Actualizar usuario empleado
-    async updateEmployee(currentEmail: string, data: Partial<IUser>) {
+    async updateEmployee(id:number, data: Partial<IUser>) {
         try {
-            const currentEmailNorm = normalizedEmail(currentEmail);
+           
 
             // 1. Verificar que el usuario a actualizar exista
-            const userToUpdate = await userRepository.getUserByEmail(currentEmailNorm);
+            const userToUpdate = await userRepository.getUserById(id);
             if (!userToUpdate) {
                 throw new Error("El usuario que intentas actualizar no existe.");
             }
@@ -126,7 +126,7 @@ class UserService{
                 }
 
                 // Si el email es diferente al actual, verificar que no esté en uso por otro
-                if (newEmailNorm !== currentEmailNorm) {
+                if (newEmailNorm !== userToUpdate.email) {
                     const existEmail = await userRepository.getUserByEmail(newEmailNorm);
                     if (existEmail) {
                         throw new Error("El email ya está en uso por otro usuario.");
@@ -158,7 +158,7 @@ class UserService{
             }
 
             // 5. Realizar la actualización en la base de datos
-            const updatedUser = await userRepository.updateUser(currentEmailNorm, updateData);
+            const updatedUser = await userRepository.updateUser(id, updateData);
 
             return {
                 success: true,

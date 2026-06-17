@@ -49,14 +49,14 @@ class UserRepository {
     }
 
     // Actualizar usuario 
-    async updateUser(email:string, data:Partial<UserPg>): Promise<UserPg|null>{
+    async updateUser(id:number, data:Partial<UserPg>): Promise<UserPg|null>{
         await UserPg.update(
             data,
             {
-                where: {email:email}
+                where: {id:id}
             }
         );
-        return await this.getUserByEmail(email);
+        return await this.getUserById(id);
     }
 
     //Eliminar ususario

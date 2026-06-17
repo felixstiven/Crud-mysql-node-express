@@ -35,6 +35,19 @@ class UserController {
             next();
         }
     }
+
+    //actuakizar usuario
+    async updateEmployee(req:Request, res:Response, next:NextFunction){
+        const id = Number(req.params.id);
+        const data = req.body;
+        try {
+            const response = await userService.updateEmployee(id, data);
+            res.status(200).json(response);
+        } catch (error) {
+            next(error);
+        }
+
+    }
 }
 
 const userController = new UserController();
