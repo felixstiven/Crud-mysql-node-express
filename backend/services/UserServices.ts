@@ -9,7 +9,7 @@ import {
     esPasswordValida,
     hashPassword
 } from "../utils/validators.js";
-import { data } from "react-router-dom";
+
 
 
 class UserService{
