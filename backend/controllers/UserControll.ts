@@ -14,6 +14,17 @@ class UserController {
         }
     }
 
+    //Obtner todos los usuario de la empresa
+    async getUsersByCompanyId(req: Request, res:Response, next:NextFunction){
+        const compnayId = Number(req.params.compnayId);
+
+        try {
+            const response = await userService.getUsersByCompanyId(compnayId);
+            res.status(200).json(response);
+        } catch (error) {
+            next(error);
+        }
+    }
 }
 
 const userController = new UserController();
