@@ -1,0 +1,35 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "main": "index.ts",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "tsx index.ts",
+    "dev": "tsx --watch index.ts"
+  },
+  "author": "stiven felix",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "cors": "^2.8.5",
+    "dotenv": "^17.4.2",
+    "express": "^4.21.1",
+    "mysql2": "^3.22.5",
+    "node": "^26.3.0",
+    "nodemon": "^3.1.14",
+    "pg": "^8.21.0",
+    "pg-hstore": "^2.3.4",
+    "sequelize": "^6.37.8",
+    "sequelize-typescript": "^2.1.6"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^6.0.0",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
+    "@types/node": "^25.9.3",
+    "tsx": "^4.22.4",
+    "typescript": "^6.0.3"
+  }
+}

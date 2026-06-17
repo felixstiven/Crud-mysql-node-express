@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GOSYT - Solicitar Demo</title>
+    <link rel="stylesheet" href="../styles/register.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="auth-card">
+      <a href="#" class="auth-logo">
+        <svg
+          class="gosyt-svg"
+          viewBox="0 0 100 100"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <circle cx="28" cy="20" r="4.5" fill="#00A4C4" />
+          <path
+            d="M68 28C60 20 46 18 36 26C24 35 22 52 30 64C38 76 54 78 66 70C74 64 78 54 78 45H52"
+            stroke="#00A4C4"
+            stroke-width="11"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+        <span class="gosyt-text">GOSYT</span>
+      </a>
+
+      <div class="auth-header">
+        <h1>Potencia tus operaciones</h1>
+        <p>
+          ¿Ya tienes cuenta corporativa? <a href="login.html">Inicia sesión</a>
+        </p>
+      </div>
+
+      <form id="registerForm" autocomplete="off" >
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="firstName">Primer Nombre</label>
+            <input
+              type="text"
+              id="firstName"
+              class="form-control"
+              placeholder="Juan"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="secondName">Segundo Nombre</label>
+            <input
+              type="text"
+              id="secondName"
+              class="form-control"
+              placeholder="David"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="firstLastName">Primer Apellido</label>
+            <input
+              type="text"
+              id="firstLastName"
+              class="form-control"
+              placeholder="Pérez"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="secondLastName">Segundo Apellido</label>
+            <input
+              type="text"
+              id="secondLastName"
+              class="form-control"
+              placeholder="Felix"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="email">Correo corporativo</label>
+            <input
+              type="email"
+              id="email"
+              class="form-control"
+              placeholder="felix@empresa.com"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="company">Nombre de la empresa</label>
+            <input
+              type="text"
+              id="company"
+              class="form-control"
+              autocomplete="username"
+              placeholder="Logística S.A.S."
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input
+              type="password"
+              id="password"
+              class="form-control"
+              autocomplete="new-password"
+              placeholder=""
+              required
+            />
+            <div id="passwordError" class="password-error"></div>
+          </div>
+          <div class="form-group">
+            <label for="passwordConfirmation">Confirmar Password</label>
+            <input
+              type="password"
+              id="passwordConfirmation"
+              class="form-control"
+              autocomplete="new-password"
+              placeholder=""
+              required
+            />
+            <div id="passwordError" class="password-error"></div>
+          </div>
+
+          <!-- <div class="form-group">
+                    <label for="companySize">Tamaño de la empresa</label>
+                    <select id="companySize" class="form-control" required>
+                        <option value="" disabled selected>Selecciona una opción</option>
+                        <option value="1-10">1 - 10 técnicos en campo</option>
+                        <option value="11-50">11 - 50 técnicos en campo</option>
+                        <option value="51-200">51 - 200 técnicos en campo</option>
+                        <option value="200+">Más de 200 técnicos</option>
+                    </select>
+                </div> -->
+
+          <!-- <div class="form-group full-width">
+                    <label for="phone">Número de contacto (WhatsApp)</label>
+                    <input type="tel" id="phone" class="form-control" placeholder="+57 300 123 4567" required>
+                </div> -->
+        </div>
+
+        <button type="submit" id="submit" class="btn-submit">
+          Solicitar acceso a demostración
+        </button>
+      </form>
+    </div>
+
+    <script src="../logic/register.js"></script>
+  </body>
+</html>

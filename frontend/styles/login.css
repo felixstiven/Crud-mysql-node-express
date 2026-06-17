@@ -1,0 +1,186 @@
+:root {
+  --color-primary-teal: #00a4c4;
+  --color-dark-navy: #0a1e31;
+  --color-text-paragraph: #526475;
+  --color-bg-light: #f8fafc;
+  --color-white: #ffffff;
+  --color-border: #e2e8f0;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Plus Jakarta Sans", sans-serif;
+}
+
+body {
+  background-color: var(--color-bg-light);
+  color: var(--color-dark-navy);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.auth-card {
+  background-color: var(--color-white);
+  width: 100%;
+  max-width: 440px;
+  border-radius: 16px;
+  padding: 40px;
+  box-shadow:
+    0 20px 40px rgba(10, 30, 49, 0.04),
+    0 1px 3px rgba(10, 30, 49, 0.02);
+  border: 1px solid var(--color-border);
+}
+
+/* Logo GOSYT */
+.auth-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 32px;
+  text-decoration: none;
+}
+
+.gosyt-svg {
+  width: 36px;
+  height: 36px;
+}
+
+.gosyt-text {
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--color-dark-navy);
+  letter-spacing: -0.8px;
+}
+
+/* Encabezado */
+.auth-header {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.auth-header h1 {
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  margin-bottom: 8px;
+  color: var(--color-dark-navy);
+}
+
+.auth-header p {
+  font-size: 14px;
+  color: var(--color-text-paragraph);
+  font-weight: 500;
+}
+
+.auth-header a {
+  color: var(--color-primary-teal);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.auth-header a:hover {
+  text-decoration: underline;
+}
+
+/* Formularios */
+.form-group {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-group label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-dark-navy);
+}
+
+.form-control {
+  width: 100%;
+  padding: 12px 16px;
+  font-size: 15px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  color: var(--color-dark-navy);
+  outline: none;
+  transition: all 0.2s ease;
+  background-color: var(--color-bg-light);
+}
+
+.form-control:focus {
+  border-color: var(--color-primary-teal);
+  background-color: var(--color-white);
+  box-shadow: 0 0 0 4px rgba(0, 164, 196, 0.1);
+}
+
+/* Acciones secundarias */
+.form-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  font-size: 14px;
+}
+
+.remember-me {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+  color: var(--color-text-paragraph);
+  cursor: pointer;
+}
+
+.remember-me input {
+  accent-color: var(--color-primary-teal);
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+.forgot-password {
+  color: var(--color-primary-teal);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.forgot-password:hover {
+  text-decoration: underline;
+}
+
+/* Botón Principal */
+.btn-submit {
+  width: 100%;
+  background-color: var(--color-primary-teal);
+  color: var(--color-white);
+  border: none;
+  padding: 14px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-submit:hover {
+  opacity: 0.95;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 164, 196, 0.2);
+}
+
+.btn-submit:active {
+  transform: translateY(0);
+}
+
+.textError {
+  color: red;
+  font-size: 12px;
+  font-weight: 600;
+}

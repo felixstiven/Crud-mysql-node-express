@@ -1,0 +1,435 @@
+/* ==========================================================================
+           VARIABLES DE COLOR (Actualizadas según Captura de pantalla 2026-06-11 182655.jpg)
+           ========================================================================== */
+:root {
+  --color-primary-teal: #00a4c4; /* Cyan de los gráficos y acentos */
+  --color-dark-navy: #0a1e31; /* Azul corporativo principal (Plaque/Texto) */
+  --color-sidebar-bg: #0b1522; /* Fondo oscuro de la barra lateral */
+  --color-workspace-bg: #f4f6f9; /* Fondo claro del panel general */
+  --color-card-bg: #ffffff; /* Tarjetas totalmente blancas puras */
+  --color-text-main: #1e293b; /* Texto principal oscuro */
+  --color-text-muted: #64748b; /* Texto secundario / gris slate */
+  --color-border-light: #e2e8f0; /* Bordes sutiles en zona clara */
+  --color-border-dark: rgba(255, 255, 255, 0.06); /* Bordes en zona oscura */
+  --color-stat-green: #10b981;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Plus Jakarta Sans", sans-serif;
+}
+
+body {
+  background-color: var(--color-workspace-bg);
+  color: var(--color-text-main);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* CONTAINER PRINCIPAL */
+.dashboard-container {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* ==========================================================================
+           SIDEBAR (Mantiene el tono oscuro corporativo de la imagen)
+           ========================================================================== */
+.sidebar {
+  width: 260px;
+  background-color: var(--color-sidebar-bg);
+  border-right: 1px solid var(--color-border-dark);
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  flex-shrink: 0;
+}
+
+.sidebar-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 40px;
+  text-decoration: none;
+}
+
+.brand-logo {
+  width: 34px;
+  height: 34px;
+}
+
+.brand-name {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--color-white);
+  color: #ffffff;
+  letter-spacing: -0.5px;
+}
+
+.sidebar-menu {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.menu-item a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: rgba(255, 255, 255, 0.55);
+  text-decoration: none;
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.menu-item.active a,
+.menu-item a:hover {
+  background-color: rgba(0, 164, 196, 0.15);
+  color: var(--color-primary-teal);
+}
+
+/* ==========================================================================
+           ÁREA DE TRABAJO CLARA (Limpia y de alta legibilidad)
+           ========================================================================== */
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+/* BARRA SUPERIOR BLANCA */
+.topbar {
+  height: 75px;
+  border-bottom: 1px solid var(--color-border-light);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 40px;
+  background-color: #ffffff;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+}
+
+.page-title h1 {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--color-dark-navy);
+  letter-spacing: -0.5px;
+}
+
+.topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.system-status {
+  font-size: 13px;
+  font-weight: 600;
+  background-color: rgba(16, 185, 129, 0.08);
+  color: var(--color-stat-green);
+  padding: 6px 14px;
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid rgba(16, 185, 129, 0.15);
+}
+
+.status-dot {
+  width: 6px;
+  height: 6px;
+  background-color: var(--color-stat-green);
+  border-radius: 50%;
+  box-shadow: 0 0 6px var(--color-stat-green);
+}
+
+.user-profile {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-left: 1px solid var(--color-border-light);
+  padding-left: 20px;
+}
+
+.profile-img {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 2px solid var(--color-primary-teal);
+  object-fit: cover;
+}
+
+.profile-info p {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--color-dark-navy);
+}
+
+.profile-info span {
+  font-size: 11px;
+  color: var(--color-text-muted);
+  display: block;
+}
+
+/* ESPACIO DE TRABAJO GENERAL */
+.workspace {
+  padding: 40px;
+  flex: 1;
+  overflow-y: auto;
+}
+
+/* ==========================================================================
+           FORMULARIO EN TARJETA CLARA (Efecto Moderno)
+           ========================================================================== */
+.form-card {
+  background-color: var(--color-card-bg);
+  border: 1px solid var(--color-border-light);
+  border-radius: 16px;
+  padding: 36px;
+  max-width: 800px;
+  width: 100%;
+  box-shadow:
+    0 10px 30px rgba(10, 30, 49, 0.05),
+    0 1px 3px rgba(10, 30, 49, 0.02);
+}
+
+.form-card-header {
+  margin-bottom: 32px;
+  border-bottom: 1px solid var(--color-border-light);
+  padding-bottom: 18px;
+}
+
+.form-card-header h2 {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  color: var(--color-dark-navy);
+  margin-bottom: 6px;
+}
+
+.form-card-header p {
+  font-size: 14px;
+  color: var(--color-text-muted);
+}
+
+/* Rejilla de Campos */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.full-width {
+  grid-column: span 2;
+}
+
+.form-group label {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--color-dark-navy);
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+}
+
+/* Controles de Entrada Claros */
+.form-control {
+  width: 100%;
+  background-color: var(--color-workspace-bg);
+  border: 1px solid var(--color-border-light);
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-size: 15px;
+  color: var(--color-text-main);
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.form-control:focus {
+  border-color: var(--color-primary-teal);
+  background-color: #ffffff;
+  box-shadow: 0 0 0 4px rgba(0, 164, 196, 0.1);
+}
+
+.form-control::placeholder {
+  color: #94a3b8;
+}
+
+/* Select Desplegable */
+select.form-control {
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2300A4C4' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  background-size: 14px;
+  padding-right: 40px;
+}
+
+/* Botones del Formulario */
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
+  border-top: 1px solid var(--color-border-light);
+  padding-top: 24px;
+}
+
+.btn-cancel {
+  background-color: transparent;
+  color: var(--color-text-muted);
+  border: 1px solid var(--color-border-light);
+  padding: 12px 24px;
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-cancel:hover {
+  background-color: var(--color-workspace-bg);
+  color: var(--color-text-main);
+}
+
+.btn-save {
+  background-color: var(--color-primary-teal);
+  color: #ffffff;
+  border: none;
+  padding: 12px 32px;
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-save:hover {
+  opacity: 0.95;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 164, 196, 0.25);
+}
+
+
+/* ==========================================================================
+   SECCIÓN DE LA TABLA DE EMPLEADOS (Estilo Premium GOSYT)
+   ========================================================================== */
+.table-container {
+    background-color: var(--color-card-bg); /* #FFFFFF */
+    border: 1px solid var(--color-border-light); /* #E2E8F0 */
+    border-radius: 16px;
+    padding: 32px;
+    max-width: 800px; /* Alineación perfecta con el ancho del formulario */
+    width: 100%;
+    margin-top: 32px; /* Margen superior para separarlo del formulario */
+    box-shadow: 0 10px 30px rgba(10, 30, 49, 0.05), 0 1px 3px rgba(10, 30, 49, 0.02);
+}
+
+.table-container h2 {
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    color: var(--color-dark-navy);
+    margin-bottom: 20px;
+}
+
+/* El escudo protector contra desbordes */
+.table-responsive {
+    width: 100%;
+    overflow-x: auto; /* Activa el scroll horizontal solo si el contenido se desborda */
+    -webkit-overflow-scrolling: touch; /* Desplazamiento ultra suave en iOS y Android */
+}
+
+.employee-table {
+    width: 100%;
+    border-collapse: separate;
+    text-align: left;
+    min-width: 650px; /* Fuerza un ancho mínimo interno para que los datos no se aplasten en móviles */
+}
+
+/* Estilos de los Encabezados */
+.employee-table th {
+    background-color: var(--color-workspace-bg); /* #F4F6F9 */
+    color: var(--color-dark-navy);
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    padding: 14px 16px;
+    border-bottom: 2px solid var(--color-border-light);
+}
+
+/* Estilos de las Celdas de Datos */
+.employee-table td {
+    padding: 14px 16px;
+    font-size: 14px;
+    color: var(--color-text-main);
+    border-bottom: 1px solid var(--color-border-light);
+    vertical-align: middle; /* Centra verticalmente textos y botones */
+    white-space: nowrap; /* Evita que correos largos rompan la fila en dos líneas */
+}
+
+/* Efecto visual al pasar el cursor sobre las filas */
+.employee-table tbody tr {
+    transition: background-color 0.2s ease;
+}
+
+.employee-table tbody tr:hover {
+    background-color: rgba(160, 187, 228, 0.6); /* Destacado sutil */
+}
+
+/* Limpieza del borde de la última fila */
+.employee-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* ==========================================================================
+   BOTONES DE ACCIÓN INTERNOS DE LA TABLA
+   ========================================================================== */
+.btn-edit, .btn-delete {
+    padding: 6px 14px;
+    font-size: 13px;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s ease;
+}
+
+/* Botón Editar - Tono Cyan translúcido */
+.btn-edit {
+    background-color: rgba(0, 164, 196, 0.08);
+    color: var(--color-primary-teal);
+    margin-right: 6px;
+}
+
+.btn-edit:hover {
+    background-color: var(--color-primary-teal);
+    color: #FFFFFF;
+    box-shadow: 0 4px 10px rgba(0, 164, 196, 0.2);
+}
+
+/* Botón Eliminar - Tono Alerta translúcido */
+.btn-delete {
+    background-color: rgba(239, 68, 68, 0.08);
+    color: #EF4444;
+}
+
+.btn-delete:hover {
+    background-color: #EF4444;
+    color: #FFFFFF;
+    box-shadow: 0 4px 10px rgba(239, 68, 68, 0.2);
+}

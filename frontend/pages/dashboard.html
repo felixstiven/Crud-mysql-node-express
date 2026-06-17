@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GOSYT - Panel de Control</title>
+    <!-- Fuente Corporativa -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/frontend/styles/dashboard.css" />
+  </head>
+  <body>
+    <div class="dashboard-container">
+      <!-- SIDEBAR IZQUIERDA (Estilo Oscuro Impecable) -->
+      <aside class="sidebar">
+        <a href="#" class="sidebar-brand">
+          <img
+            src="/frontend/public/logoGosyt.png"
+            width="49px"
+            height="48px"
+            alt=""
+          />
+          <span class="brand-name">GOSYT</span>
+        </a>
+
+        <ul class="sidebar-menu">
+          <li class="menu-item"><a href="#">📊 Dashboard</a></li>
+          <li class="menu-item"><a href="#">📋 Órdenes de Trabajo</a></li>
+          <li class="menu-item active"><a href="#">👥 Empleados</a></li>
+          <li class="menu-item"><a href="#">📍 Monitoreo Vivo</a></li>
+          <li class="menu-item"><a href="#">⚙️ Configuración</a></li>
+        </ul>
+      </aside>
+
+      <!-- CONTENIDO DERECHA (Luz e Interfaces Claras) -->
+      <main class="main-content">
+        <!-- BARRA SUPERIOR -->
+        <header class="topbar">
+          <div class="page-title">
+            <h1>Gestión de Empleados</h1>
+          </div>
+
+          <div class="topbar-actions">
+            <div class="system-status">
+              <div class="status-dot"></div>
+              Sistema Operativo
+            </div>
+            <div class="user-profile">
+              <img
+                src="https://randomuser.me/api/portraits/men/32.jpg"
+                alt="Usuario"
+                class="profile-img"
+              />
+              <div class="profile-info">
+                <p>Stiven Felix Alv</p>
+                <span>Lead Developer</span>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <!-- ESPACIO DE TRABAJO CLARO -->
+        <div class="workspace">
+          <div class="form-card">
+            <div class="form-card-header">
+              <h2>Registrar Nuevo Empleado</h2>
+              <p>
+                Vincula personal técnico o administrativo al sistema
+                multiempresa de GOSYT.
+              </p>
+            </div>
+
+            <!-- Formulario con Inputs Adaptados -->
+            <form id="employeeForm">
+              <div class="form-grid">
+                <div class="form-group">
+                  <label for="firstName">Primer Nombre</label>
+                  <input
+                    type="text"
+                    id="firstName"
+                    class="form-control"
+                    placeholder="Ej. Carlos"
+                    required
+                  />
+                </div>
+
+                <div class="form-group">
+                  <label for="secondName">Segundo Nombre</label>
+                  <input
+                    type="text"
+                    id="secondName"
+                    class="form-control"
+                    placeholder="Ej. Andres"
+                  />
+                </div>
+
+                <div class="form-group">
+                  <label for="firstLastName">Primer Apellido</label>
+                  <input
+                    type="text"
+                    id="firstLastName"
+                    class="form-control"
+                    placeholder="Ej. felix"
+                    required
+                  />
+                </div>
+
+                <div class="form-group">
+                  <label for="secondLastName">Segundo Apellido</label>
+                  <input
+                    type="text"
+                    id="secondLastName"
+                    class="form-control"
+                    placeholder="Ej. alvis"
+                  />
+                </div>
+
+                <div class="form-group">
+                  <label for="email">Correo Electrónico Corporativo</label>
+                  <input
+                    type="email"
+                    id="email"
+                    class="form-control"
+                    placeholder="c.mendoza@gosyt.com"
+                    autocomplete="username"
+                    required
+                  />
+                </div>
+
+                <div class="form-group">
+                  <label for="role">Rol en la Plataforma</label>
+                  <select id="role" class="form-control" required>
+                    <option value="" disabled selected>
+                      Selecciona un rol
+                    </option>
+                    <option value="tecnico">Técnico de Campo</option>
+                    <option value="supervisor">Supervisor de Zona</option>
+                    <option value="admin">Administrador de Empresa</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="password">Crear Contraseña</label>
+                  <input
+                    type="password"
+                    id="password"
+                    class="form-control"
+                    placeholder="••••••••"
+                    autocomplete="new-password"
+                    required
+                  />
+                </div>
+              </div>
+              <div id="textError" class="text-error"></div>
+
+              <div class="form-actions">
+                <button type="button" id="cancelBtn" class="btn-cancel">
+                  Cancelar
+                </button>
+                <button type="submit" id="submitBtn" class="btn-save">
+                  Guardar Empleado
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <div class="table-container">
+            <h2>Empleados Registrados</h2>
+
+            <!-- CONTENEDOR DE SEGURIDAD PARA EL RESPONSIVE -->
+            <div class="table-responsive">
+              <table class="employee-table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Nombres</th>
+                    <th>Apellidos</th>
+                    <th>Email</th>
+                    <th>Rol</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+                <tbody id="employeeList" class="table-list">
+                  <!-- Se llenará dinámicamente con los datos -->
+                  <tr>
+                    <td>1</td>
+                    <td>Stiven Felix Alvis</td>
+                    <td>Felix Alvis</td>
+                    <!-- Corregido el mock text para producción -->
+                    <td>stiven@gosyt.com</td>
+                    <td>Admin</td>
+                    <td>
+                      <button class="btn-edit" id="editBtn">Editar</button>
+                      <button class="btn-delete" id="deleteBtn">Eliminar</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script src="/frontend/logic/employee.js"></script>
+  </body>
+</html>
