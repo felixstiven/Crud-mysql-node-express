@@ -32,7 +32,7 @@ class UserController {
             const response = await userService.deleteEmployee(id);
             res.status(200).json(response);
         } catch (error) {
-            next();
+            next(error);
         }
     }
 

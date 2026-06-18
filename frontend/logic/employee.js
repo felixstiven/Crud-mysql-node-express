@@ -26,7 +26,21 @@ document.addEventListener("DOMContentLoaded", ()=>{
 
 employeeForm.addEventListener("submit", (e) => {
     e.preventDefault();
-    createEmployee(); 
+    const editingId = employeeForm.dataset.editingId;
+    if (editingId) {
+        fetchUpdateEmployee(editingId);
+    } else {
+        createEmployee(); 
+    }
+});
+
+cancelButton.addEventListener("click", () => {
+    employeeForm.reset();
+    delete employeeForm.dataset.editingId;
+    submitButton.textContent = "Guardar Empleado";
+    passwordInput.required = true;
+    passwordInput.placeholder = "";
+    clearError();
 });
 
 const fetchEmployees = async (url, data, companyId, method) => {
@@ -81,25 +95,27 @@ const validatePassword = () => {
     return true;
 }
 
-const validateForm = () => {
+const validateForm = (isEdit = false) => {
     const  email = emailInput.value.trim();
     const password = passwordInput.value.trim();
     const role = roleInput.value.trim();
     const firstName = firstNameInput.value.trim();
     const firstLastName = firstLastNameInput.value.trim();
     
-    if (!firstName || !firstLastName || !email || !password || !role) {
+    if (!firstName || !firstLastName || !email || (!isEdit && !password) || !role) {
         showError("Complete todos los campos requeridos.");
         return false;
     }
-    if(!validatePassword()) return false;    
+    if (!isEdit || password !== "") {
+        if(!validatePassword()) return false;    
+    }
     return true;
 }
 
 
 async function createEmployee() {
 
-    const isValid = validateForm();
+    const isValid = validateForm(false);
     if(!isValid) return;
 
     const textContentButtonActual = submitButton.textContent;
@@ -213,7 +229,10 @@ function renderEmployeesTable(employees){
     editButton.dataset.id = employee.id;
     editButton.dataset.bsToggle="modal"
     editButton.dataset.bsTarget = "#editEmployeeModal";
-    //editBtn.addEventListener("click", handleEditClick);
+    editButton.addEventListener("click", (e) =>{
+        e.preventDefault();
+        handleEditClick(employee.id, employee);
+    });
 
     const deleteBtn = document.createElement("button");
     deleteBtn.className = "btn-delete";
@@ -255,3 +274,79 @@ const handleDeleteClick = async (id) => {
     }
 } 
 
+
+const handleEditClick = async (id, employeeData) => {
+    
+    const {firstName, secondName, firstLastName, secondLastName, email, role} = employeeData;
+
+    firstNameInput.value = firstName || "";
+    secondNameInput.value = secondName || "";
+    firstLastNameInput.value = firstLastName || "";
+    secondLastNameInput.value = secondLastName || ""; 
+    emailInput.value = email || "";
+    roleInput.value = role || "";
+
+    passwordInput.required = false;
+    passwordInput.placeholder = "•••••••• (dejar vacío si no cambia)";
+
+    submitButton.textContent = "Actulizar Empleado";
+
+    //Guardar el id que estamos editando en un atributo de datos del formulario para usarlo cuando se envie 
+    employeeForm.dataset.editingId = id;
+}
+
+async function fetchUpdateEmployee(id) {
+    const isValid = validateForm(true);
+    if(!isValid) return;
+
+    const url = `http://localhost:3520/api/users/update/${id}`;
+    
+    const isConfirm = confirm("¿Estas seguro de actualizar el empleado?");
+
+    if(!isConfirm) return;
+
+    const textContentButtonActual = submitButton.textContent;
+    submitButton.disabled = true;
+    submitButton.textContent = "Actualizando...";
+
+    try {
+        const dataToSend = {
+            firstName: firstNameInput.value.trim(),
+            secondName: secondNameInput.value.trim(),
+            firstLastName: firstLastNameInput.value.trim(),
+            secondLastName: secondLastNameInput.value.trim(),
+            email: emailInput.value.trim(),
+            role: roleInput.value.trim(),
+        }
+
+        if(passwordInput.value.trim() !== "") {
+            dataToSend.password = passwordInput.value.trim();
+        }
+
+        const response = await fetch(url,{
+            method:"PUT",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body: JSON.stringify(dataToSend)
+        });
+        const result = await response.json();
+
+        if(!result.success) throw new Error(result.message || "Fallo al actualizar el empleado");
+
+        alert("Empleado actualizado correctamente");
+        await fetchListEmployees();
+        employeeForm.reset();
+        delete employeeForm.dataset.editingId;
+        submitButton.textContent = "Guardar Empleado";
+        passwordInput.required = true;
+        passwordInput.placeholder = "";
+
+    } catch (error) {
+        console.error("Error al actualizar usuario:", error);
+        showError(error.message || "Fallo al actualizar el empleado");
+    } finally {
+        submitButton.disabled = false;
+        submitButton.textContent = "Guardar Empleado";
+    }
+}
