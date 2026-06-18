@@ -11,6 +11,7 @@ import {
 } from "../utils/validators.js";
 
 
+
 class UserService{
 
     //Crear usuario empleados (jefes, tecnicos) de una empresa ya registrada
@@ -82,13 +83,32 @@ class UserService{
         }
     }
 
-    //Actualizar usuario empleado
-    async updateEmployee(currentEmail: string, data: Partial<IUser>) {
+    //obtener todos los usuarios de una empresa por id
+    async getUsersByCompanyId(companyId:number){
         try {
-            const currentEmailNorm = normalizedEmail(currentEmail);
+            if(!companyId) throw new Error("No se envio el id de compañia");
+            const employee = await userRepository.getUsersByIdCompany(companyId);
+            if(!employee) throw new Error("No se encontraron empleados.");
+
+            return {
+                success: true,
+                message:"Empleados obtenidos exitosamente",
+                data:employee
+            }
+            
+        } catch (error) {
+            console.error("Error al obtener empleados", error);
+            throw error;
+        }
+    }
+
+    //Actualizar usuario empleado
+    async updateEmployee(id:number, data: Partial<IUser>) {
+        try {
+           
 
             // 1. Verificar que el usuario a actualizar exista
-            const userToUpdate = await userRepository.getUserByEmail(currentEmailNorm);
+            const userToUpdate = await userRepository.getUserById(id);
             if (!userToUpdate) {
                 throw new Error("El usuario que intentas actualizar no existe.");
             }
@@ -106,7 +126,7 @@ class UserService{
                 }
 
                 // Si el email es diferente al actual, verificar que no esté en uso por otro
-                if (newEmailNorm !== currentEmailNorm) {
+                if (newEmailNorm !== userToUpdate.email) {
                     const existEmail = await userRepository.getUserByEmail(newEmailNorm);
                     if (existEmail) {
                         throw new Error("El email ya está en uso por otro usuario.");
@@ -138,7 +158,7 @@ class UserService{
             }
 
             // 5. Realizar la actualización en la base de datos
-            const updatedUser = await userRepository.updateUser(currentEmailNorm, updateData);
+            const updatedUser = await userRepository.updateUser(id, updateData);
 
             return {
                 success: true,
@@ -153,20 +173,16 @@ class UserService{
     }
 
     //Eliminar usuario empleados
-    async deleteEmployee(email:string){
-        //Verificar que el correo llegue correctamenete y que exista
-        const emailNorm = normalizedEmail(email);
-        if(!validarEmail(emailNorm)) throw new Error("Email no valido.");
+    async deleteEmployee(id:number){
 
-        const existeUser = await userRepository.getUserByEmail(emailNorm);
+        const existeUser = await userRepository.getUserById(id);
         if(!existeUser) throw new Error("Usuario no encontrado.");
 
         try {
-            await userRepository.deleteUser(emailNorm);
+            await userRepository.deleteUser(id);
             return{
                 success:true,
                 message:"Usuario eliminado correctamente",
-                data: emailNorm
             };
             
         } catch (error) {

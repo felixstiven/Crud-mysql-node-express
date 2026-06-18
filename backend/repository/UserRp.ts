@@ -23,23 +23,47 @@ class UserRepository {
             }
         );
     }
+    //Obtener usuario por id
+    async getUserById(id:number): Promise<UserPg | null>{
+        return await UserPg.findOne(
+            {
+                where: {id:id},
+                include:{
+                    model: CompanyPg,
+                    attributes: ["id", "name"]
+                }
+            }
+        )
+    }
+    //Obtener todos los usuarios de una empresa por id
+    async getUsersByIdCompany(id_company:number): Promise<UserPg[]|null>{
+        return await UserPg.findAll(
+            {
+                where: {companyId: id_company},
+                include:{
+                    model: CompanyPg,
+                    attributes:["id", "name"]
+                }
+            }
+        );
+    }
 
     // Actualizar usuario 
-    async updateUser(email:string, data:Partial<UserPg>): Promise<UserPg|null>{
+    async updateUser(id:number, data:Partial<UserPg>): Promise<UserPg|null>{
         await UserPg.update(
             data,
             {
-                where: {email:email}
+                where: {id:id}
             }
         );
-        return await this.getUserByEmail(email);
+        return await this.getUserById(id);
     }
 
     //Eliminar ususario
-    async deleteUser(email:string): Promise<void>{
+    async deleteUser(id:number): Promise<void>{
         await UserPg.destroy(
             {
-                where:{email:email}
+                where:{id:id}
             }
         );
     }
