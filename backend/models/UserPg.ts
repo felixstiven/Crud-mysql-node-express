@@ -12,13 +12,13 @@ import {
     CreatedAt,
     UpdatedAt,
     BelongsToMany
-} from"sequelize-typescript"
+} from "sequelize-typescript"
 import { CompanyPg } from "./CompanyPg.js"
 
 
 //Modelo tabla users
-@Table({ tableName: "users", timestamps:true})
-export class UserPg extends Model{
+@Table({ tableName: "users", timestamps: true })
+export class UserPg extends Model {
     @PrimaryKey
     @AutoIncrement
     @Column(DataType.INTEGER)
@@ -53,9 +53,9 @@ export class UserPg extends Model{
     @AllowNull(false)
     @Column(DataType.ENUM('owner', 'tecnico', 'supervisor', 'admin'))
     declare role: 'owner' | 'tecnico' | 'supervisor' | 'admin';
-    
+
     @AllowNull(false)
-    @Column({type:DataType.BOOLEAN, defaultValue:true})
+    @Column({ type: DataType.BOOLEAN, defaultValue: true })
     declare isActive: boolean;
 
     //Relacion con company
@@ -65,12 +65,12 @@ export class UserPg extends Model{
     declare companyId: number;
 
     @BelongsTo(() => CompanyPg)
-    company!:CompanyPg;
+    company!: CompanyPg;
 
     //Timestap automiticos
     @CreatedAt
-    declare createdAt:Date;
+    declare createdAt: Date;
 
     @UpdatedAt
-    declare updatedAt:Date;
+    declare updatedAt: Date;
 }

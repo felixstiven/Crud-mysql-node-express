@@ -3,7 +3,7 @@ import userService from "../services/UserServices.js";
 
 class UserController {
     //Crear empleado
-    async createEmployee(req:Request, res:Response, nex:NextFunction){
+    async createEmployee(req: Request, res: Response, nex: NextFunction) {
         const companyId = Number(req.params.companyId);
         const userData = req.body;
         try {
@@ -15,7 +15,7 @@ class UserController {
     }
 
     //Obtner todos los usuario de la empresa
-    async getUsersByCompanyId(req: Request, res:Response, next:NextFunction){
+    async getUsersByCompanyId(req: Request, res: Response, next: NextFunction) {
         const companyId = Number(req.params.companyId);
 
         try {
@@ -26,7 +26,7 @@ class UserController {
         }
     }
 
-    async deleteEmployee(req:Request, res:Response, next:NextFunction){
+    async deleteEmployee(req: Request, res: Response, next: NextFunction) {
         const id = Number(req.params.id);
         try {
             const response = await userService.deleteEmployee(id);
@@ -37,7 +37,7 @@ class UserController {
     }
 
     //actuakizar usuario
-    async updateEmployee(req:Request, res:Response, next:NextFunction){
+    async updateEmployee(req: Request, res: Response, next: NextFunction) {
         const id = Number(req.params.id);
         const data = req.body;
         try {

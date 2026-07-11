@@ -8,7 +8,7 @@ import {
     DataType,
     UpdatedAt,
     CreatedAt,
- } from 'sequelize-typescript';
+} from 'sequelize-typescript';
 
 // Modelo para la tabla 'companies'
 @Table({ tableName: 'companies', timestamps: true })
