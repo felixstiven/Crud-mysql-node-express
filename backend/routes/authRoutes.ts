@@ -9,6 +9,5 @@ routerAuth.post("/register", authController.registerOwnerAndCompany);
 
 //Ruta login 
 routerAuth.post("/login", authController.login);
- 
+
 export default routerAuth;
- 

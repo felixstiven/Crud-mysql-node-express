@@ -1,12 +1,12 @@
 import dotenv from "dotenv";
 dotenv.config({ override: true });
 
-import express, {Application, NextFunction, Request, Response} from "express";
+import express, { Application, NextFunction, Request, Response} from "express";
 import cors from "cors";
 import { connectPostgres } from "./config/dbPostgres.js";
 import routerAuth from "./routes/authRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
- 
+
 //Iniciar Express
 const app: Application = express();
 
@@ -20,8 +20,6 @@ app.use("/api/auth", routerAuth);
 
 //Rutas Crud Empleaods
 app.use("/api/users", userRoutes);
-
-
 
 
 //puerto 

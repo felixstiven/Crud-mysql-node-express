@@ -1,6 +1,6 @@
 //Interfaces propsUser
-export interface IUser{
-    company:ICompany;
+export interface IUser {
+    company: ICompany;
     firstName: string;
     secondName?: string;
     firstLastName: string;
@@ -11,12 +11,12 @@ export interface IUser{
     isActive: boolean;
 }
 
-export interface ILogin{
-    email:string;
-    password:string;
+export interface ILogin {
+    email: string;
+    password: string;
 }
 
-export interface ICompany{
-    companyName:string;
+export interface ICompany {
+    companyName: string;
     trialExpiresAt: Date | string;
 }

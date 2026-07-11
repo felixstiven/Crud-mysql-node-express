@@ -3,8 +3,8 @@ import { UserPg } from "../models/UserPg.js";
 import companyRepository from "../repository/CompanyRp.js";
 import userRepository from "../repository/UserRp.js";
 import { IUser } from "../dt/interfaces.js";
-import { 
-    validarEmail,  
+import {
+    validarEmail,
     normalizedEmail,
     esPasswordValida,
     hashPassword
@@ -12,10 +12,10 @@ import {
 
 
 
-class UserService{
+class UserService {
 
     //Crear usuario empleados (jefes, tecnicos) de una empresa ya registrada
-    async createEmployee(data:IUser, companyId:number){
+    async createEmployee(data: IUser, companyId: number) {
         const {
             firstName,
             secondName,
@@ -24,56 +24,56 @@ class UserService{
             email,
             password,
             role,
-        } = data; 
+        } = data;
 
         // Definir Rol 
-        if(role !== "supervisor" && role !== "tecnico" && role !== "admin") throw new Error("Rol no valido.");
+        if (role !== "supervisor" && role !== "tecnico" && role !== "admin") throw new Error("Rol no valido.");
 
         //Validar que venga un companyId
-        if(!companyId) throw new Error("companyId es requerido.");
-        
+        if (!companyId) throw new Error("companyId es requerido.");
+
         //Validar campos obligatorios
-        if(!firstName || !firstLastName || !email || !password) throw new Error("Datos obligatorios no proporcionados.");
+        if (!firstName || !firstLastName || !email || !password) throw new Error("Datos obligatorios no proporcionados.");
 
         //Normalizar y validar email
         const emailNorm = normalizedEmail(email);
-        if(!validarEmail(emailNorm)) throw new Error("Email no valido.");
+        if (!validarEmail(emailNorm)) throw new Error("Email no valido.");
 
         //Validar contreña
         const PasswordValida = esPasswordValida(password);
-        if(!PasswordValida) throw new Error("Contraseña no valida. Debe contener al menos 8 caracteres, 1 numero, 1 mayuscula, 1 minuscula y 1 caracter especial.");
+        if (!PasswordValida) throw new Error("Contraseña no valida. Debe contener al menos 8 caracteres, 1 numero, 1 mayuscula, 1 minuscula y 1 caracter especial.");
 
         //Verificar si existe el email y si la empresa existe
         const existeUser = await userRepository.getUserByEmail(emailNorm);
         const existeCompany = await companyRepository.getCompanyById(companyId);
 
-        if(existeUser) throw new Error("El email ya existe en la base de datos.");
-        if(!existeCompany) throw new Error("La empresa no existe");
+        if (existeUser) throw new Error("El email ya existe en la base de datos.");
+        if (!existeCompany) throw new Error("La empresa no existe");
 
         try {
             const hashedPassword = await hashPassword(password);
 
             const createUser = await userRepository.createUser(
                 {
-                    firstName:firstName,
+                    firstName: firstName,
                     secondName,
                     firstLastName,
                     secondLastName,
-                    email:emailNorm,
+                    email: emailNorm,
                     passwordHash: hashedPassword,
                     role,
-                    companyId:companyId,
+                    companyId: companyId,
                     isActive: true,
                 }
             );
 
-            return{
+            return {
                 success: true,
                 message: "Usuario creado exitosamente",
                 data: {
                     user: createUser,
                     company: {
-                        name:existeCompany.name,
+                        name: existeCompany.name,
                     },
                 }
             }
@@ -84,18 +84,18 @@ class UserService{
     }
 
     //obtener todos los usuarios de una empresa por id
-    async getUsersByCompanyId(companyId:number){
+    async getUsersByCompanyId(companyId: number) {
         try {
-            if(!companyId) throw new Error("No se envio el id de compañia");
+            if (!companyId) throw new Error("No se envio el id de compañia");
             const employee = await userRepository.getUsersByIdCompany(companyId);
-            if(!employee) throw new Error("No se encontraron empleados.");
+            if (!employee) throw new Error("No se encontraron empleados.");
 
             return {
                 success: true,
-                message:"Empleados obtenidos exitosamente",
-                data:employee
+                message: "Empleados obtenidos exitosamente",
+                data: employee
             }
-            
+
         } catch (error) {
             console.error("Error al obtener empleados", error);
             throw error;
@@ -103,9 +103,9 @@ class UserService{
     }
 
     //Actualizar usuario empleado
-    async updateEmployee(id:number, data: Partial<IUser>) {
+    async updateEmployee(id: number, data: Partial<IUser>) {
         try {
-           
+
 
             // 1. Verificar que el usuario a actualizar exista
             const userToUpdate = await userRepository.getUserById(id);
@@ -173,18 +173,18 @@ class UserService{
     }
 
     //Eliminar usuario empleados
-    async deleteEmployee(id:number){
+    async deleteEmployee(id: number) {
 
         const existeUser = await userRepository.getUserById(id);
-        if(!existeUser) throw new Error("Usuario no encontrado.");
+        if (!existeUser) throw new Error("Usuario no encontrado.");
 
         try {
             await userRepository.deleteUser(id);
-            return{
-                success:true,
-                message:"Usuario eliminado correctamente",
+            return {
+                success: true,
+                message: "Usuario eliminado correctamente",
             };
-            
+
         } catch (error) {
             console.error("Error al eliminar empleado:", error);
             throw error;
