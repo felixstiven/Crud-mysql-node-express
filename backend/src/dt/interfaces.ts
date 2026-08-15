@@ -20,3 +20,10 @@ export interface ICompany {
     companyName: string;
     trialExpiresAt: Date | string;
 }
+
+
+export interface ITokenPayload {
+    id: number;
+    role: string;
+    companyId: number;
+}

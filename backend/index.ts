@@ -1,11 +1,11 @@
 import dotenv from "dotenv";
 dotenv.config({ override: true });
 
-import express, { Application, NextFunction, Request, Response} from "express";
+import express, { Application, NextFunction, Request, Response } from "express";
 import cors from "cors";
-import { connectPostgres } from "./config/dbPostgres.js";
-import routerAuth from "./routes/authRoutes.js";
-import userRoutes from "./routes/userRoutes.js";
+import { connectPostgres } from "./src/config/dbPostgres.js";
+import routerAuth from "./src/routes/authRoutes.js";
+import userRoutes from "./src/routes/userRoutes.js";
 
 //Iniciar Express
 const app: Application = express();
@@ -30,14 +30,14 @@ const startPostgres = async () => {
     try {
         await connectPostgres();
     } catch (error) {
-        console.log("Error al conectar a la base de datos: ", error )
+        console.log("Error al conectar a la base de datos: ", error)
     }
-} 
+}
 
 startPostgres();
 
 //Middleware para manejar errores
-app.use((err:any, req:Request, res:Response, next:NextFunction) => {
+app.use((err: any, req: Request, res: Response, next: NextFunction) => {
     const status = err.status || 500;
     const message = err.message || "Error interno del servidor";
 
@@ -48,6 +48,6 @@ app.use((err:any, req:Request, res:Response, next:NextFunction) => {
 })
 
 //Inicio del servidor
-app.listen(PORT,()=>{
+app.listen(PORT, () => {
     console.log("Servidor corriendo en el puerto: ", PORT)
 });

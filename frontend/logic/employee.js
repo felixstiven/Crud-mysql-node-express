@@ -47,8 +47,10 @@ const fetchEmployees = async (url, data, companyId, method) => {
     const options = {
         method: method || "POST",
         headers:{
-            "Content-Type":"application/json"
+            "Content-Type":"application/json",
+            "Authorization": `Bearer ${localStorage.getItem("token")}`,
         },
+
         body: JSON.stringify(data)
     }
     try {
@@ -123,13 +125,14 @@ async function createEmployee() {
     submitButton.textContent = "Guardando...";
 
     try {
-        const userLogged = JSON.parse(localStorage.getItem("user"));
-        if(!userLogged || !userLogged.companyId){
-            showError("Sesion expirada, por favor inicia sesion nuevamente.");
+        const userLogged = localStorage.getItem("token");
+        const companyId = localStorage.getItem("companyId");
+        if(!userLogged || !companyId){
+            showError("Sesion expirada, por favor inicia sesion nuevamente."    );
             return;
         }
+
         
-        const companyId = userLogged.companyId;
 
         const dataToSend = {
             firstName: firstNameInput.value.trim(),
@@ -162,18 +165,23 @@ async function createEmployee() {
 
 async function fetchListEmployees(){
 
-    const userLogged = JSON.parse(localStorage.getItem("user"));
-    if(!userLogged || !userLogged.companyId){
+    const userLogged = localStorage.getItem("token");
+    const companyId = localStorage.getItem("companyId");
+    if(!userLogged || !companyId){
         showError("Sesion expirada, por favor inicia sesion nuevamente.");
         return;
     }
 
-    const companyId = userLogged.companyId;
-
     const url = `http://localhost:3520/api/users/load/${companyId}`;
 
     try {
-        const response = await fetch(url);
+        const response = await fetch(url, {
+            method: "GET",
+            headers: {
+                "Content-type": "application/json",
+                "Authorization": `Bearer ${userLogged}`,
+            }
+        });
         const result = await response.json();
 
         console.log("resut", result);
@@ -254,6 +262,14 @@ function renderEmployeesTable(employees){
 }
 
 const handleDeleteClick = async (id) => {
+
+    const userLogged = localStorage.getItem("token");
+    const companyId = localStorage.getItem("companyId");
+    if(!userLogged || !companyId){
+        showError("Sesion expirada, por favor inicia sesion nuevamente.");
+        return;
+    }
+
     const url = `http://localhost:3520/api/users/delete/${id}`;
 
     const isConfirm = confirm("¿Estas seguro de eliminar el empleado?");
@@ -262,6 +278,10 @@ const handleDeleteClick = async (id) => {
     try {
         const response = await fetch(url,{
             method:"DELETE",
+            headers: {
+                "Content-type": "application/json",
+                "Authorization": `Bearer ${userLogged}`,
+            }
         });
         const result = await response.json();
         if(!result.success) throw new Error(result.message || "Fallo al eliminar el empleado");
@@ -277,7 +297,14 @@ const handleDeleteClick = async (id) => {
 
 const handleEditClick = async (id, employeeData) => {
     
-    const {firstName, secondName, firstLastName, secondLastName, email, role} = employeeData;
+    const {
+        firstName, 
+        secondName, 
+        firstLastName, 
+        secondLastName, 
+        email, 
+        role
+    } = employeeData;
 
     firstNameInput.value = firstName || "";
     secondNameInput.value = secondName || "";
@@ -310,6 +337,13 @@ async function fetchUpdateEmployee(id) {
     submitButton.textContent = "Actualizando...";
 
     try {
+
+        const userLogged = localStorage.getItem("token");
+        if(!userLogged){
+            showError("Sesion expirada, por favor inicia sesion nuevamente.");
+            return;
+        }
+
         const dataToSend = {
             firstName: firstNameInput.value.trim(),
             secondName: secondNameInput.value.trim(),
@@ -326,7 +360,8 @@ async function fetchUpdateEmployee(id) {
         const response = await fetch(url,{
             method:"PUT",
             headers:{
-                "Content-Type":"application/json"
+                "Content-Type":"application/json",
+                "Authorization": `Bearer ${userLogged}`,
             },
             body: JSON.stringify(dataToSend)
         });

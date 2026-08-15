@@ -5,6 +5,7 @@ backend/node_modules/
 # Environment variables
 .env
 backend/.env
+backend/crud.ts
 
 # Build outputs
 dist/

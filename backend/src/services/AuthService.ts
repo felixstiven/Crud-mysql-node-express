@@ -1,4 +1,3 @@
-
 import sequelize from "../config/dbPostgres.js";
 import companyRepository from "../repository/CompanyRp.js";
 import userRepository from "../repository/UserRp.js";
@@ -8,7 +7,8 @@ import {
     normalizedEmail,
     esPasswordValida,
     hashPassword,
-    comparePassword
+    comparePassword,
+    generateToken,
 } from "../utils/validators.js";
 
 class AuthService {
@@ -134,13 +134,21 @@ class AuthService {
             //Verificar que el usuario este activo 
             if (!user.isActive) throw new Error("Usuario no activo");
 
+            //Generar JWT
+            const token = generateToken({
+                id: user.id,
+                role: user.role,
+                companyId: user.companyId
+            });
+
             //retornar los datos del usuario para la entrada al sistema 
             return {
                 success: true,
                 message: "Usuario logueado correctamente",
                 data: {
                     user: user,
-                    company: user?.company
+                    company: user?.company,
+                    token: token
                 }
             };
         } catch (error) {
